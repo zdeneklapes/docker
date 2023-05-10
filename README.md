@@ -2,4 +2,4 @@
 
 # DESCRIPTION
 
-This repository store all dockerfile taht builds the images located in https://hub.docker.com/u/zdeneklapes
+This repository stores all dockerfiles that build the images located in https://hub.docker.com/u/zdeneklapes
