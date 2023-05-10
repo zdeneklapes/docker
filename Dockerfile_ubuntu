@@ -44,10 +44,15 @@ RUN apt-get update \
 
 WORKDIR /home/zdeneklapes
 
+# Setup root
+RUN echo 'root:root' | chpasswd
+
 # Setup SSH: username=user:password=user
 RUN useradd -rm -d /home/zdeneklapes -s /bin/bash -g root -G sudo -u 1000 user
 RUN echo 'user:user' | chpasswd
 RUN service ssh start
+
+# USER user
 
 # Port to expose and Entrypoint
 EXPOSE 22
