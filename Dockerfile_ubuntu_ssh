@@ -2,19 +2,19 @@ FROM ubuntu:20.04
 
 # Install system packages
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
-RUN apt-get update --quiet \
-    && apt-get install --quiet -y \
+RUN apt-get update \
+    && apt-get install -y \
         openssh-server  \
         sudo \
         ssh \
-        \
+    \
         python3-pip \
         python3-dev \
         python3-venv \
         libevent-dev \
-        \
+    \
         vim \
-        \
+    \
         gcc \
         g++ \
         gdb \
@@ -26,17 +26,16 @@ RUN apt-get update --quiet \
         automake \
         valgrind \
         software-properties-common \
-        \
-        ninja-build \
-        neovim \
-        swig \
-        \
-        locales-all \
-        dos2unix \
-        \
-        git \
-        doxygen \
-        fish \
+    \
+       ninja-build \
+       neovim \
+       swig \
+   \
+       locales-all \
+       dos2unix \
+   \
+       doxygen \
+       fish \
         rsync \
         tar \
         tree \
@@ -44,11 +43,17 @@ RUN apt-get update --quiet \
     && apt-get clean
 
 WORKDIR /home/zdeneklapes
-USER root
+
+# Setup root
 RUN echo 'root:root' | chpasswd
 
-SHELL ["fish", "--command"]
-RUN chsh -s /usr/bin/fish
-ENV SHELL /usr/bin/fish
-ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
-ENTRYPOINT [ "fish" ]
+# Setup SSH: username=user:password=user
+RUN useradd -rm -d /home/zdeneklapes -s /bin/bash -g root -G sudo -u 1000 user
+RUN echo 'user:user' | chpasswd
+RUN service ssh start
+
+# USER user
+
+# Port to expose and Entrypoint
+EXPOSE 22
+CMD ["/usr/sbin/sshd","-D"]
