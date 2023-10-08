@@ -20,6 +20,5 @@ wget https://github.com/openpbs/openpbs/archive/refs/heads/master.zip \
     && sudo make install \
     && sudo /opt/pbs/libexec/pbs_postinstall \
     && sudo sed -i 's/PBS_START_MOM=0/PBS_START_MOM=1/' /etc/pbs.conf \
-    && sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
-    && sudo /etc/init.d/pbs start
+    && sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
 
