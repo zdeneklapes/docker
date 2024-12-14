@@ -1,0 +1,66 @@
+version: '3.6'
+
+services:
+  python3.10:
+    container_name: python3.10
+    # Here must be defined both image and build, because we use different .env files with which are the images build
+    image: zdeneklapes/python3.10:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_python3
+    entrypoint:
+      - "/usr/bin/fish"
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+      - ./tmp/fish/:/root/.local/share/fish/ # Mount the fish shell history, to remain files when docker container is rebuild: This will create ./tmp/fish/ folder in the project directory if it doesn't exist already
+    stdin_open: true
+    tty: true
+  ubuntu:
+    container_name: ubuntu
+    # Here must be defined both image and build, because we use different .env files with which are the images build
+    image: zdeneklapes/ubuntu:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_ubuntu
+    entrypoint:
+      - "/usr/bin/fish"
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+      - ./tmp/fish/:/root/.local/share/fish/ # Mount the fish shell history, to remain files when docker container is rebuild: This will create ./tmp/fish/ folder in the project directory if it doesn't exist already
+    stdin_open: true
+    tty: true
+  ubuntu-fish:
+    container_name: ubuntu-fish
+    image: zdeneklapes/ubuntu-fish:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_ubuntu_fish
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+  ubuntu-fish-cpp:
+    container_name: ubuntu-fish-cpp
+    image: zdeneklapes/ubuntu-fish-cpp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_ubuntu_fish_cpp
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+      - ./tmp/fish/:/root/.local/share/fish/ # Mount the fish shell history, to remain files when docker container is rebuild: This will create ./tmp/fish/ folder in the project directory if it doesn't exist already
+  ubuntu-fish-cpp-numpy:
+    container_name: ubuntu-fish-cpp-numpy
+    image: zdeneklapes/ubuntu-fish-cpp-numpy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_ubuntu_fish_cpp_numpy
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+      - ./tmp/fish/:/root/.local/share/fish/ # Mount the fish shell history, to remain files when docker container is rebuild: This will create ./tmp/fish/ folder in the project directory if it doesn't exist already
+  ubuntu-ssh:
+    container_name: ubuntu-ssh
+    image: zdeneklapes/ubuntu-ssh:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_ubuntu_ssh
+    volumes:
+      - ./:/app/ # Mount the project directory to the container
+      - ./tmp/fish/:/root/.local/share/fish/ # Mount the fish shell history, to remain files when docker container is rebuild: This will create ./tmp/fish/ folder in the project directory if it doesn't exist already

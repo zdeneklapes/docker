@@ -1,6 +1,7 @@
+.vscode/
+.idea/
+tmp/
+node_modules/
+dist/
+venv/
 .DS_Store
-.vscode
-.idea
-node_modules
-dist
-venv
